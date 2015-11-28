@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>键盘控制</title>
+<style>
+*{
+    margin: 0 ; padding: 0 ; list-style: none ;
+}
+html,body{
+    overflow: hidden;
+}
+body{
+    background: #050505; width: 100%; height: 100%;
+}
+#box{
+    width: 133px; height: 200px; margin: 150px auto; position: absolute;
+    left: 50%; margin-left: -70px; top: 5%;
+    background:blue; border-radius: 10px;
+    -webkit-transform:perspective(800px) rotateX(-15deg) rotateY(0deg);
+    -moz-transform:perspective(800px) rotateX(-15deg) rotateY(0deg);
+    transform:perspective(800px) rotateX(-15deg) rotateY(0deg);
+    -webkit-transform-style:preserve-3d;
+    -moz-transform-style:preserve-3d;
+    transform-style:preserve-3d;
+}
+#box div{
+    width: 100%; height: 100%; position: absolute; left: 0 ; top: 0;
+    background: url(img/cat_0.png) no-repeat;
+    border-radius: 10px;
+    box-shadow: 0 0 5px 1px #FFFFF0;
+}
+#box div span{
+    width: 100%; height: 100%; position: absolute; left: 0 ;top: 0;
+    background:url(img/cat_0.png) no-repeat;
+    opacity:0.2; border-radius:8px; box-shadow:0 0 10px 3px #FFFFF0;
+    -webkit-transform:translateY(15px) scale(1,-1);
+    -moz-transform:translateY(15px) scale(1,-1);
+    transform:translateY(15px) scale(1,-1);
+    -webkit-transform-origin:bottom center;
+    -moz-transform-origin:bottom center;
+    transform-origin:bottom center;
+    -webkit-mask:-webkit-linear-gradient(rgba(0,0,0,0) 40%, rgba(0,0,0,1)); 
+    -moz-mask:-moz-linear-gradient(rgba(0,0,0,0) 40%, rgba(0,0,0,1)); 
+    mask:linear-gradient(rgba(0,0,0,0) 40%, rgba(0,0,0,1)); 
+}
+</style>
+</head>
+<body>
+<div id="box">
+    <!-- <div><span></span></div> -->
+</div> 
+</body>
+</html>
+<script>
+function setC3(obj,name,value){
+    var str = name.charAt(0).toUpperCase()+name.substring(1);
+
+    obj.style["Webkit"+str]=value;
+    obj.style["Moz"+str]=value;
+    obj.style["ms"+str]=value;
+    obj.style[str]=value;
+
+};
+window.onload=function(){
+    var oBox = document.getElementById("box");
+    var N = 11;
+    for (var i = 0; i < N; i++) {
+        var oDiv= document.createElement('div');
+        oBox.appendChild(oDiv);
+        oDiv.style.backgroundImage = "url(img/"+(i+1)+".jpg)";
+        oDiv.innerHTML='<span></span>';
+        oDiv.children[0].style.backgroundImage="url(img/"+(i+1)+".jpg)";
+
+        setC3(oDiv,"transition","1s all ease "+(N-i)*300+"ms");
+
+        (function(obj,index){
+            setTimeout(function(){
+                setC3(obj,"transform","rotateY("+360/N*index+"deg) translateZ(350px)");
+            },0);
+        })(oDiv,i);
+    };
+
+    var aDiv = oBox.children;
+    aDiv[0].addEventListener("transitionend",function(){
+        keyControl();
+        mouseControl();
+        change();
+    },false);
+
+    var x = -15;
+    var y = 0;
+    var lastY = 0;
+    var speedY = 0;
+    var timer = null;
+    function mouseControl(){
+        oBox.onmousedown=function(ev){
+            clearInterval(timer);
+            var disX=ev.clientX-y;
+            clearMove();
+            document.onmousemove=function(ev){
+                y = ev.clientX-disX;
+                change();
+                speedY = y-lastY;
+                lastY = y;
+            };
+            document.onmouseup=function(ev){
+                document.onmousemove=document.onmouseup=null;
+                timer = setInterval(function(){
+                    y+=speedY;
+                    speedY*=0.95;
+                    if(Math.abs(speedY)<1){
+                        clearInterval(timer);
+                    };
+                    change();
+                }, 30);
+            };
+            return false;
+        };
+
+    };
+
+    function keyControl(){
+
+        document.onkeydown = function(ev){
+            switch(ev.keyCode){
+                case 37:
+                y-=360/N
+                break;
+                case 39:
+                break;
+                case 38:
+                break;
+                case 40:
+                break;
+            }
+
+        };
+
+
+    };
+
+
+
+    
+
+    function change(){
+        for (var i = 0; i < aDiv.length; i++) {
+            setC3(aDiv[i],"transform","rotateY("+(360/N*i+y/5)+"deg) translateZ(350px)");
+
+            var s=Math.abs((360/N*i+y/5)%360);
+            
+            s>180 && (s=360-s);
+            
+            s=180-s;
+            
+            var scale=s/180;
+            
+            scale<0.2 && (scale=0.2);
+            
+            //aDiv[i].innerHTML=scale;
+            
+            aDiv[i].style.opacity=scale;
+
+        };
+    };
+
+    function move(){
+       for (var i = 0; i < aDiv.length; i++) {
+            setC3(aDiv[i],"transition","1s all ease")
+        }; 
+    };
+    function clearMove(){
+        for (var i = 0; i < aDiv.length; i++) {
+            setC3(aDiv[i],"transition","none")
+        };
+    };
+};
+</script>

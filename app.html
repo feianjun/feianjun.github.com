@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>app</title>
+<style>
+*{
+    margin: 0 ; padding: 0 ; list-style: none;
+}
+.page{
+    -webkit-box-shadow: rgba(0,0,0,0.3) 0 1px 3px;
+    -moz-box-shadow: rgba(0,0,0,0.3) 0 1px 3px;
+    box-shadow: rgba(0,0,0,0.3) 0 1px 3px; 
+    background: #fff;
+    border: 1px solid #D2D2D2;
+    width: 980px;
+    margin: 100px auto;
+}
+.page .box{
+    overflow: hidden;
+    position: relative;
+    width: 820px;
+    z-index: 0;
+    height:158px;
+    margin: 0 70px; 
+}
+.page .box ul{
+    width: 1680px;
+}
+.page .box ul li{
+    width:140px; 
+    float:left;
+    text-align: center;
+}
+a{
+    text-decoration:none;
+    font: 12px/18px "Lucida Grande","Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif;
+    color:#7F7F7F;
+}
+ul a:hover{color:#333;}
+.foot{
+    width: 100%;
+    height:30px; 
+    text-align:center; 
+    background:#fff; 
+    overflow:hidden;
+    background:url(appimg/nav_bg.png) no-repeat 0 0;
+    background:-moz-linear-gradient(center bottom, rgba(223,223,223,1) 0%, rgba(242,242,242,1) 66%, rgba(242,242,242,1) 90%, rgba(230,230,230,1) 93%, rgba(190,190,190,1) 96%, rgba(150,150,150,1) 100%);
+    background:-webkit-gradient(linear, left bottom, left top, from(rgba(223,223,223,1)), color-stop(66%, rgba(242,242,242,1)), color-stop(90%, rgba(242,242,242,1)), color-stop(93%, rgba(230,230,230,1)), color-stop(96%, rgba(210,210,210,1)), to(rgba(140,140,140,1)));
+    border-bottom:1px solid #ebebeb;
+    position:relative;
+}
+.caret{
+    background: url(appimg/caret_active.gif) no-repeat scroll 0 0;
+    display: block;
+    height: 8px;
+    margin: 0 0 -8px -7px;
+    position: absolute;
+    width: 15px;
+}
+.foot a{
+    display: inline-block;
+    margin: 0 15px;
+    padding: 8px 0 6px;
+    cursor:pointer;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+.foot .show{
+    cursor: default;
+    color:#2B2B2B;  
+}
+.foot a:hover{color:#000;}
+</style>
+</head>
+<body>
+<div class="page">
+    <div class="box">
+        <ul>
+                <li><a href="javasctipt:;"><img src="appimg/1.jpg" alt=""/>iPod shuffle</a></li>
+                <li><a href="javasctipt:;"><img src="appimg/2.jpg" alt=""/>iPod nano</a></li>
+                <li><a href="javasctipt:;"><img src="appimg/3.jpg" alt=""/>iPod classic</a></li>
+                <li><a href="javasctipt:;"><img src="appimg/4.jpg" alt=""/>iPod touch</a></li>
+                <li><a href="javasctipt:;"><img src="appimg/5.jpg" alt=""/>Apple TV</a></li>
+                <li><a href="javasctipt:;"><img src="appimg/6.jpg" alt=""/>Accessories</a></li>
+                <li><a href="javasctipt:;"><img src="appimg/7.jpg" alt=""/>Download iTunes 10</a></li>
+                <li><a href="javasctipt:;"><img src="appimg/8.jpg" alt=""/>iTunes Gift Cards</a></li>
+                <li><a href="javasctipt:;"><img src="appimg/9.jpg" alt=""/>Nike + iPod</a></li>
+                <li><a href="javasctipt:;"><img src="appimg/10.jpg" alt=""/>(PRODUCT) RED</a></li>
+                <li><a href="javasctipt:;"><img src="appimg/11.jpg" alt=""/>MobileMe</a></li>
+                <li><a href="javasctipt:;"><img src="appimg/12.jpg" alt=""/>In-Ear Headphones</a></li>
+        </ul>
+
+        
+    </div>
+        <div class="foot">
+            <span style="left: 424px;" class="caret"></span>
+            <a class="show">Products</a>
+            <a>iTunes and more</a>
+        </div>
+</div>  
+</body>
+<script src="js/move.js"></script>
+<script>
+function getByClass(a,b){
+    if(a.getElementsByClassName){
+        return a.getElementsByClassName(b);
+    }
+    var arr = [];
+    var all = a.getElementsByTagName('*');
+    var re = RegExp("\\b"+b+"\\b","g");
+    for (var i = 0; i < all.length; i++) {
+        if(re.test(all[i].className)){
+            arr.push(all[i]);
+        }
+    };
+    return arr;
+};
+window.onload = function(){
+
+    var aLi=document.getElementsByTagName('ul')[0].getElementsByTagName('li');
+    var aBtn=getByClass(document, 'foot')[0].getElementsByTagName('a');
+    var oCaret=getByClass(document, 'caret')[0];
+    var aPos=[];
+    var timer=null;
+    var i=0;
+
+    for(i=0;i<aLi.length;i++){
+        aLi[i].index=i;
+        aPos[i]=aLi[i].offsetLeft;
+        aLi[i].style.left=aPos[i]+'px';
+    }
+    
+    for(i=0;i<aLi.length;i++){
+        aLi[i].style.position='absolute';  
+    }
+
+    aBtn[0].onclick=function(){
+
+        var i=aLi.length-1;
+        clearTimeout(timer);
+
+        function next(){
+            if(i>=aLi.length/2){
+                move(aLi[i],{left:900})
+                timer = setTimeout(next, 100);
+                i--;
+            }else{
+                timer=setTimeout(next2, 150);
+            };
+        };
+
+        function next2(){
+            if(i>=0){
+                move(aLi[i],{left:aPos[i]});
+                timer=setTimeout(next2, 100);
+            }
+            i--;
+        };
+        next();
+        aBtn[1].className='';
+        this.className='show';
+        move(oCaret,{left:this.offsetLeft+this.offsetWidth/2});
+    };
+
+    aBtn[1].onclick=function(){
+
+        var i = 0;
+        clearTimeout(timer);
+
+        function next(){
+            if(i<aLi.length/2){
+                move(aLi[i],{left:-200})
+                timer = setTimeout(next, 100);
+                i++;
+            }else{
+                timer=setTimeout(next2, 150);
+            };
+        };
+
+        function next2(){
+            if(i<aLi.length){
+                move(aLi[i],{left:aPos[i-aLi.length/2]})
+                timer=setTimeout(next2, 100);
+            }
+            i++;
+
+        };
+
+        next();
+        aBtn[0].className='';
+        this.className='show';
+        move(oCaret,{left:this.offsetLeft+this.offsetWidth/2});
+    };
+};
+</script>
+</html>

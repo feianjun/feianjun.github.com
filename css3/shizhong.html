@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>时钟</title>
+<style>
+*{
+    margin:0 ; padding: 0 ; list-style: none ;
+}
+body{
+    background: #BBFFFF;
+}
+h1{
+    width: 100%; height: 40px; line-height: 40px; text-align: center; color: #B03060;
+}
+.box{
+    width: 400px; height: 400px; position: absolute;left: 20% ; top: 30%;
+    border-radius: 50%; 
+    box-shadow: 2px 3px 5px rgba(0,0,0,.6),-2px -1px 3px rgba(0,12,0,0.5);
+    border:1px solid #030303;
+}
+.hours,.min,.sec,.cap{
+    position: absolute; left: 50%; top: 50%;
+    -webkit-transform-origin:center bottom;
+    -moz-transform-origin:center bottom;
+    transform-origin:center bottom;
+}
+.hours{
+    width: 6px; height: 80px; background: #0A0A0A;
+    
+    margin-left: -3px; margin-top: -80px;
+    border-radius: 50% 50% 0 0 ;
+}
+.min{
+    width: 4px; height: 110px; background: #473C8B;
+    margin-left: -2px; margin-top: -110px;
+    border-radius: 50% 50% 0 0 ;
+}
+.sec{
+    width: 2px; height: 140px; background: #8B1A1A;
+    margin-left: -1px; margin-top: -140px;
+    border-radius: 10px 10px 0 0 ;
+}
+.cap{
+    width: 30px; height: 30px; border-radius: 50%;
+    background: #474747; margin-left: -15px; margin-top: -15px;
+}
+.box span{ 
+    position:absolute; left:50%;top:0; margin-left:-1px; 
+    width:2px; height:6px; background:#8A8A8A; 
+    -webkit-transform-origin:center 200px;
+    -moz-transform-origin:center 200px;
+    transform-origin:center 200px;
+}
+.box span.on{
+    width:4px;height:10px; 
+    margin-left:-2px;
+    background: #836FFF;
+}
+.box span em{
+    position: absolute;left: 50%; margin-left: -20px; top: 12px;
+    text-align: center; font-style: normal;
+    width: 40px;
+}
+</style>
+<script>
+function setCss3(obj,name,value){
+    var str = name.charAt(0).toUpperCase()+name.substring(1);
+    obj.style["Webkit" + str] = value;
+    obj.style["Moz" + str] = value;
+    obj.style["ms" + str] = value;
+    obj.style[name] = value;  
+};
+window.onload=function(){
+
+    var oBox = document.querySelector(".box");
+    var oH = oBox.querySelector(".hours");
+    var oM = oBox.querySelector(".min");
+    var oS = oBox.querySelector(".sec");
+
+    for (var i = 0; i < 60; i++) {
+        var oSpan = document.createElement("span");
+        oBox.appendChild(oSpan);
+        // oSpan.style.transform = "rotate("+i*6+"deg)";
+        setCss3(oSpan,"transform","rotate("+i*6+"deg)")
+        if(i%5==0){
+            oSpan.className="on";
+            if(i==0){
+                oSpan.innerHTML = "<em>12</em>";
+            }else{
+                oSpan.innerHTML = "<em>"+i+"</em>";
+                oSpan.children[0].innerHTML=i/5;
+                setCss3(oSpan.children[0],"transform","rotate("+(-i*6)+"deg)");
+            };
+        };
+    };
+
+    function tick(){
+        var oDate = new Date();
+        var iH    = oDate.getHours();
+        var iM    = oDate.getMinutes();
+        var iS    = oDate.getSeconds();
+        var iMS   = oDate.getMilliseconds();
+        setCss3(oH,"transform","rotate("+(iH+iM/60)*30+"deg)");
+        setCss3(oM,"transform","rotate("+(iM+iS/60)*6+"deg)");
+        setCss3(oS,"transform","rotate("+(iS+iMS/1000)*6+"deg)");
+    }
+    setInterval(tick, 30);
+    oBox.onmousedown=function(ev){
+        var oEv = ev || event;
+        var disX = oEv.clientX-oBox.offsetLeft;
+        var disY = oEv.clientY-oBox.offsetTop;
+        document.onmousemove=function(ev){
+            var oEv = ev || event;
+            var l = oEv.clientX-disX;
+            var t = oEv.clientY-disY;
+            setPos(l,t);
+        };
+        document.onmouseup=function(){
+            document.onmousemove=document.onmouseup=null;
+            oBox.releaseCapture && oBox.releaseCapture()
+        };
+        oBox.setCapture && oBox.setCapture();
+        return false;
+    }
+
+    function setPos(l,t){
+        l<0 && (l=0);
+        l>document.documentElement.clientWidth-oBox.offsetWidth && (l=document.documentElement.clientWidth-oBox.offsetWidth);
+        t<0 && (t=0);
+        t>document.documentElement.clientHeight-oBox.offsetHeight&& (t=document.documentElement.clientHeight-oBox.offsetHeight);
+        oBox.style.left = l+"px";
+        oBox.style.top = t+"px";
+    };
+};
+</script>
+</head>
+<body>
+<h1>拖拽时钟</h1>
+<div class="box">
+    <div class="hours"></div>
+    <div class="min"></div>
+    <div class="sec"></div>
+    <div class="cap"></div>
+    <!-- <span><em>12</em></span> -->
+</div>
+</body>
+</html>
