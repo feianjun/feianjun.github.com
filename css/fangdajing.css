@@ -1,0 +1,35 @@
+*{
+    margin: 0 ; padding: 0 ;list-style: none;
+}
+.content{
+    width: 800px; height: 500px; margin: 50px auto; position: relative;
+}
+.box{
+    width: 300px; height: 300px; position: absolute; left: 0 ; top: 0;
+}
+.box .mask{
+    width: 100px; height: 100px; background: rgba(0,0,0,.5); position: absolute;left: 0 ; top: 0; cursor: move; display: none;
+}
+.box img{
+    width: inherit; height: inherit;
+}
+.fangda{
+    width: 300px; height: 300px; position: absolute; right:0px;top: 0;
+    overflow: hidden; background: red; display: none;
+}
+.fangda img{
+    width: 600px; height: 600px; position: absolute;left: 0 ; top: 0;
+}
+.content ul{
+    position: absolute;left:0; bottom: 0px ; height: 150px;
+    width: inherit;text-align: center;
+}
+.content ul li{
+    width: 140px; height: 150px; display: inline-block; border:2px solid transparent;
+}
+.content ul li img{
+    width: inherit; height: inherit;
+}
+.content ul li.cur{
+    border:2px solid blue;
+}
