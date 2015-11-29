@@ -1,0 +1,53 @@
+body{
+    background: url(../img/baidu.jpg) no-repeat; background-size:cover;
+}
+.nav{
+    height: 40px;background: rgba(0,0,0,.3);margin-bottom: 30px;
+}
+.baidu_list{ 
+    line-height: 40px; float: right;
+}
+.baidu_list a{
+    padding: 0 10px;float: left;height: 40px;
+}
+.baidu_list a:hover{
+    background: #3388ff;color: #fff;
+}
+.baidu_logo{
+    width: 210px; height: 68px;background: url(../img/baidu.png) no-repeat; background-size:cover; margin: 0 auto; margin-bottom: 40px;
+}
+.baidu_search{
+    width: 643px; height: 36px; margin:0 auto; position: relative;
+}
+.baidu_search .search_1{
+    width: 530px; height: 34px; border: 1px solid #ccc; border-right: none;float: left;padding-left: 10px;
+}
+.baidu_search .search_1:focus{
+    border-color: #3385ff;
+}
+.baidu_search .search_2{
+    width: 100px; height: 36px; background: #3385ff;float: left;
+    color: #fff;    text-shadow: 1px 1px 2px rgba(0,0,0,.9);
+}
+.baidu_search .hide_div{
+   width: 538px; border:  1px solid #ccc; position: absolute;
+   left: 1px; top:35px; border-top: none;display: none;padding: 10px 0;
+}
+.baidu_search .hide_div a{
+    line-height: 25px; display: block; padding-left: 10px;
+}
+.baidu_search .hide_div a:hover{
+    background: #ededed; color: #3385ff;font-weight: bold;
+}
+.foot{
+    position: absolute; left: 0; bottom: 10%;width: 100%;
+}
+.foot p{
+    text-align: center; width: 100%; line-height: 24px;
+}
+.foot p:nth-child(1) a{
+    color: blue;
+}
+.foot p,.foot p a{
+    color:#ddd;
+}

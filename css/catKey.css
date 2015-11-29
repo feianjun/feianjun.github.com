@@ -1,0 +1,40 @@
+*{
+    margin: 0 ; padding: 0 ; list-style: none ;
+}
+html,body{
+    overflow: hidden;
+}
+body{
+    background: #050505; width: 100%; height: 100%;
+}
+#box{
+    width: 133px; height: 200px; margin: 150px auto; position: absolute;
+    left: 50%; margin-left: -70px; top: 5%;
+    background:blue; border-radius: 10px;
+    -webkit-transform:perspective(800px) rotateX(-15deg) rotateY(0deg);
+    -moz-transform:perspective(800px) rotateX(-15deg) rotateY(0deg);
+    transform:perspective(800px) rotateX(-15deg) rotateY(0deg);
+    -webkit-transform-style:preserve-3d;
+    -moz-transform-style:preserve-3d;
+    transform-style:preserve-3d;
+}
+#box div{
+    width: 100%; height: 100%; position: absolute; left: 0 ; top: 0;
+    background: url(css3/img/cat_0.png) no-repeat;
+    border-radius: 10px;
+    box-shadow: 0 0 5px 1px #FFFFF0;
+}
+#box div span{
+    width: 100%; height: 100%; position: absolute; left: 0 ;top: 0;
+    background:url(css3/img/cat_0.png) no-repeat;
+    opacity:0.2; border-radius:8px; box-shadow:0 0 10px 3px #FFFFF0;
+    -webkit-transform:translateY(15px) scale(1,-1);
+    -moz-transform:translateY(15px) scale(1,-1);
+    transform:translateY(15px) scale(1,-1);
+    -webkit-transform-origin:bottom center;
+    -moz-transform-origin:bottom center;
+    transform-origin:bottom center;
+    -webkit-mask:-webkit-linear-gradient(rgba(0,0,0,0) 40%, rgba(0,0,0,1)); 
+    -moz-mask:-moz-linear-gradient(rgba(0,0,0,0) 40%, rgba(0,0,0,1)); 
+    mask:linear-gradient(rgba(0,0,0,0) 40%, rgba(0,0,0,1)); 
+}
