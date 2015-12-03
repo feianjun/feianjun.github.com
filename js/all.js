@@ -199,14 +199,14 @@ $(function(){
 
         // aPlan[0].style.width="30%";
         var aBtn = getByClass(oFen,"web");
-        aBtn[0].per=90;
+        aBtn[0].per=80;
         aBtn[1].per=80;
-        aBtn[2].per=85;
+        aBtn[2].per=75;
         aBtn[3].per=50;
         for (var i = 0; i < aBtn.length; i++) {
             aBtn[i].n=0;
             (function(index){
-                aBtn[i].onclick=function(){
+                aBtn[i].onmouseover=function(){
                     clearInterval(this.timer);
                     var _this = this;
                         this.timer = setInterval(function(){
